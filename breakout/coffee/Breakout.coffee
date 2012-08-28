@@ -73,16 +73,14 @@ class Ball extends canvasElement
 		@ctx.fill()
 
 	step: (seconds) ->
-		@x += @dx
-		@y += @dy
+		@x += @dx * seconds
+		@y += @dy * seconds
 		@draw()
 
 class @Breakout
 	constructor: (@framesCanvas,@interactionCanvas,@blocksCanvas) ->
 		@width = framesCanvas.getWidth()
 		@height = framesCanvas.getHeight()
-
-		@fps = 24
 
 		for canvas in [framesCanvas,interactionCanvas,blocksCanvas]
 			canvas.width = canvas.getWidth()
@@ -92,8 +90,6 @@ class @Breakout
 		@startGame()
 
 	startGame: () =>
-		clearInterval @redrawInterval
-
 		@level = 1
 		@clearCanvas(@interactionCanvas)
 
@@ -103,8 +99,7 @@ class @Breakout
 
 		@frames = @balls
 		element.draw() for element in @frames.concat @blocks, @paddles
-
-		@redrawInterval = setInterval @redraw, 1 / @fps
+		@redraw()
 
 	levelUp: () =>
 		blockcount = @startBlockCount + (@level * 5)
@@ -128,17 +123,21 @@ class @Breakout
 		canvas.width = canvas.getWidth()
 
 	redraw: () =>
-		element.step() for element in @frames
-		@clearCanvas(@framesCanvas)
+		requestAnimationFrame @redraw
+
+		delta = if @lastRender? then new Date().getTime() - @lastRender else 1
+
+		@clearCanvas @framesCanvas
+		element.step(delta/10) for element in @frames
 
 		@detectCollisions()
 		@frames = @balls
 
-	pause: () =>
-		clearInterval @redrawInterval
+		@lastRender = new Date().getTime()
 
+	pause: () =>
 	resume: () =>
-		@redrawInterval = setInterval @redraw, 1 / @fps
+
 
 	detectCollisions: () =>
 		for ball in @balls

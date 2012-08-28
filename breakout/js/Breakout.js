@@ -136,8 +136,8 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
     };
 
     Ball.prototype.step = function(seconds) {
-      this.x += this.dx;
-      this.y += this.dy;
+      this.x += this.dx * seconds;
+      this.y += this.dy * seconds;
       return this.draw();
     };
 
@@ -160,8 +160,6 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
 
       this.redraw = __bind(this.redraw, this);
 
-      this.clearGameScreen = __bind(this.clearGameScreen, this);
-
       this.createBlocks = __bind(this.createBlocks, this);
 
       this.gameOver = __bind(this.gameOver, this);
@@ -172,7 +170,6 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
 
       this.width = framesCanvas.getWidth();
       this.height = framesCanvas.getHeight();
-      this.fps = 24;
       _ref = [framesCanvas, interactionCanvas, blocksCanvas];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         canvas = _ref[_i];
@@ -185,8 +182,8 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
 
     Breakout.prototype.startGame = function() {
       var element, _i, _len, _ref;
-      clearInterval(this.redrawInterval);
       this.level = 1;
+      this.clearCanvas(this.interactionCanvas);
       this.balls = [new Ball(this.framesCanvas, 400, 300, 10)];
       this.paddles = [new Paddle(this.interactionCanvas, this.width / 2 - 100, this.height - 10, 200, 10)];
       this.blocks = this.createBlocks(this.startBlockCount);
@@ -196,14 +193,19 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
         element = _ref[_i];
         element.draw();
       }
-      return this.redrawInterval = setInterval(this.redraw, 1 / this.fps);
+      return this.redraw();
     };
 
     Breakout.prototype.levelUp = function() {
-      var blockcount;
+      var block, blockcount, _i, _len, _ref;
       blockcount = this.startBlockCount + (this.level * 5);
       this.level++;
       this.blocks = this.createBlocks(blockcount);
+      _ref = this.blocks;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        block = _ref[_i];
+        block.draw();
+      }
       return this.balls.push(new Ball(this.framesCanvas, 400, 300, 10));
     };
 
@@ -227,31 +229,28 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
       }).call(this);
     };
 
-    Breakout.prototype.clearGameScreen = function() {
-      var ctx;
-      ctx = this.framesCanvas.getContext('2d');
-      return ctx.clearRect(0, 0, this.width, this.height);
+    Breakout.prototype.clearCanvas = function(canvas) {
+      return canvas.width = canvas.getWidth();
     };
 
     Breakout.prototype.redraw = function() {
-      var element, _i, _len, _ref;
-      this.clearGameScreen();
+      var delta, element, _i, _len, _ref;
+      requestAnimationFrame(this.redraw);
+      delta = this.lastRender != null ? new Date().getTime() - this.lastRender : 1;
+      this.clearCanvas(this.framesCanvas);
       _ref = this.frames;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         element = _ref[_i];
-        element.step();
+        element.step(delta / 10);
       }
       this.detectCollisions();
-      return this.frames = this.balls;
+      this.frames = this.balls;
+      return this.lastRender = new Date().getTime();
     };
 
-    Breakout.prototype.pause = function() {
-      return clearInterval(this.redrawInterval);
-    };
+    Breakout.prototype.pause = function() {};
 
-    Breakout.prototype.resume = function() {
-      return this.redrawInterval = setInterval(this.redraw, 1 / this.fps);
-    };
+    Breakout.prototype.resume = function() {};
 
     Breakout.prototype.detectCollisions = function() {
       var ball, block, paddle, percent, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
@@ -271,7 +270,7 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
           ball.dx = Math.abs(ball.dx) * -1;
         }
         if (ball.y - (ball.width / 2) <= 0) {
-          ball.dy = ball.dy * -1;
+          ball.dy = Math.abs(ball.dy);
         }
         _ref1 = this.paddles;
         for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
