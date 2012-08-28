@@ -10,7 +10,8 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
   var Ball, Block, Paddle, canvasElement,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __slice = [].slice;
 
   canvasElement = (function() {
 
@@ -183,7 +184,7 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
     Breakout.prototype.startGame = function() {
       var element, _i, _len, _ref;
       this.level = 1;
-      this.clearCanvas(this.interactionCanvas);
+      this.clearCanvas(this.blocksCanvas, this.interactionCanvas);
       this.balls = [new Ball(this.framesCanvas, 400, 300, 10)];
       this.paddles = [new Paddle(this.interactionCanvas, this.width / 2 - 100, this.height - 10, 200, 10)];
       this.blocks = this.createBlocks(this.startBlockCount);
@@ -229,8 +230,13 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
       }).call(this);
     };
 
-    Breakout.prototype.clearCanvas = function(canvas) {
-      return canvas.width = canvas.getWidth();
+    Breakout.prototype.clearCanvas = function() {
+      var canvas, canvi, _i, _len;
+      canvi = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      for (_i = 0, _len = canvi.length; _i < _len; _i++) {
+        canvas = canvi[_i];
+        canvas.width = canvas.getWidth();
+      }
     };
 
     Breakout.prototype.redraw = function() {

@@ -91,7 +91,7 @@ class @Breakout
 
 	startGame: () =>
 		@level = 1
-		@clearCanvas(@interactionCanvas)
+		@clearCanvas(@blocksCanvas, @interactionCanvas)
 
 		@balls = [new Ball(@framesCanvas, 400, 300, 10)]
 		@paddles = [new Paddle(@interactionCanvas, @width / 2 - 100, @height - 10, 200, 10)]
@@ -119,8 +119,9 @@ class @Breakout
 			blockHeight = 25
 			new Block(@blocksCanvas, column * blockWidth, row * blockHeight, blockWidth, blockHeight)
 
-	clearCanvas: (canvas) ->
-		canvas.width = canvas.getWidth()
+	clearCanvas: (canvi...) ->
+		canvas.width = canvas.getWidth() for canvas in canvi
+		return
 
 	redraw: () =>
 		requestAnimationFrame @redraw
