@@ -152,7 +152,7 @@ class @Breakout
 			ball.dx = Math.abs(ball.dx) * -1 if ball.x + (ball.width/2) >= @width
 
 			##Check if it has hit the top
-			ball.dy = ball.dy * -1  if ball.y - (ball.width/2) <= 0
+			ball.dy = Math.abs(ball.dy) if ball.y - (ball.width/2) <= 0
 
 			##Has hit the paddle
 			for paddle in @paddles
