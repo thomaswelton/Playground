@@ -110,6 +110,7 @@ class @Breakout
 		blockcount = @startBlockCount + (@level * 5)
 		@level++
 		@blocks = @createBlocks(blockcount)
+		block.draw() for block in @blocks
 		@balls.push new Ball(@framesCanvas, 400, 300 , 10)
 
 	gameOver: () =>
