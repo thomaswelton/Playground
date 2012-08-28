@@ -10,14 +10,20 @@ h1{
 	line-height:1.5;
 	padding-bottom:20px;
 }
+#breakout{
+	width:800px;
+	height:600px;
+	position:relative;
+	background:black;
+}
 #page{
 	display:block;
 	margin:auto;
 	width:800px;
 	height:600px;
 }
-#breakout{
+#blocks, #frames, #paddle{
+	position:absolute;
 	width:800px;
 	height:600px;
-	background:black;
 }

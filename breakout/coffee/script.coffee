@@ -1,3 +1,3 @@
 window.addEvent 'domready', () ->
-	new Breakout $('breakout')
+	new Breakout $('frames'), $('paddle'), $('blocks')
 	true

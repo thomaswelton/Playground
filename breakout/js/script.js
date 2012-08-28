@@ -2,7 +2,7 @@
 (function() {
 
   window.addEvent('domready', function() {
-    new Breakout($('breakout'));
+    new Breakout($('frames'), $('paddle'), $('blocks'));
     return true;
   });
 

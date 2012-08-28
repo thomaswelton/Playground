@@ -77,6 +77,14 @@ h1 {
 }
 
 /* line 13, ../sass/styles.scss */
+#breakout {
+  width: 800px;
+  height: 600px;
+  position: relative;
+  background: black;
+}
+
+/* line 19, ../sass/styles.scss */
 #page {
   display: block;
   margin: auto;
@@ -84,9 +92,9 @@ h1 {
   height: 600px;
 }
 
-/* line 19, ../sass/styles.scss */
-#breakout {
+/* line 25, ../sass/styles.scss */
+#blocks, #frames, #paddle {
+  position: absolute;
   width: 800px;
   height: 600px;
-  background: black;
 }
