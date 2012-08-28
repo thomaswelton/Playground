@@ -1,0 +1,23 @@
+@import "compass/reset";
+@import "compass/css3";
+
+body{
+	padding:20px;
+	font-family:Helvetica;
+}
+h1{
+	font-size:25px;
+	line-height:1.5;
+	padding-bottom:20px;
+}
+#page{
+	display:block;
+	margin:auto;
+	width:800px;
+	height:600px;
+}
+#breakout{
+	width:800px;
+	height:600px;
+	background:black;
+}
