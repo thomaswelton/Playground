@@ -95,6 +95,7 @@ class @Breakout
 		clearInterval @redrawInterval
 
 		@level = 1
+		@clearCanvas(@interactionCanvas)
 
 		@balls = [new Ball(@framesCanvas, 400, 300, 10)]
 		@paddles = [new Paddle(@interactionCanvas, @width / 2 - 100, @height - 10, 200, 10)]
@@ -122,13 +123,12 @@ class @Breakout
 			blockHeight = 25
 			new Block(@blocksCanvas, column * blockWidth, row * blockHeight, blockWidth, blockHeight)
 
-	clearGameScreen: () =>
-		ctx = @framesCanvas.getContext '2d'
-		ctx.clearRect(0, 0, @width, @height)
+	clearCanvas: (canvas) ->
+		canvas.width = canvas.getWidth()
 
 	redraw: () =>
-		@clearGameScreen()
 		element.step() for element in @frames
+		@clearCanvas(@framesCanvas)
 
 		@detectCollisions()
 		@frames = @balls
