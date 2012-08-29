@@ -21,22 +21,28 @@ class canvasElement
 class Paddle extends canvasElement
 	constructor: (canvas, x, y, width, height) ->
 		super canvas, x, y, width, height
-
-		console.log(canvas)
-		canvas.getParent().addEvent 'mousemove', (event) =>
-			@erase()
-			clickedX = event.client.x;
-			canvasX = @canvas.getPosition().x - window.scrollX;
-			x = clickedX - canvasX;
-			@x = (x - @width / 2).limit(0, @canvas.width - @width)
-			@draw()
-
+		@addInteraction()
+		
 	draw: () =>
 		@ctx.fillStyle = @color
 		@ctx.fillRect @x, @y, @width, @height
 
 	erase: () =>
 		@ctx.clearRect @x, @y, @width, @height
+
+	addInteraction: () =>
+		document.body.addEvent 'mousemove', @onMouseMove
+
+	removeInteraction: () =>
+		document.body.removeEvent 'mousemove', @onMouseMove
+
+	onMouseMove: (event) =>
+		@erase()
+		clickedX = event.client.x;
+		canvasX = @canvas.getPosition().x - window.scrollX;
+		x = clickedX - canvasX;
+		@x = (x - @width / 2).limit(0, @canvas.width - @width)
+		@draw()
 
 class Block extends canvasElement
 	constructor: (canvas, x, y, width, height) ->
@@ -87,29 +93,42 @@ class @Breakout
 			canvas.height = canvas.getHeight()
 
 		@startBlockCount = 20
-		@startGame()
+		@blocks = @createBlocks(@startBlockCount)
+
+		@animationRequest  = 0
+
+		@ui = play : $('play')
+
+		@ui.play.addEvent 'click', (event) =>	
+			event.target.hidden = true
+			@startGame()
+
+		Visibility.change (e, state) =>
+			if state is 'hidden' then @pause() else @resume()
 
 	startGame: () =>
 		@level = 1
-		@clearCanvas(@blocksCanvas, @interactionCanvas)
+		@clearCanvas(@interactionCanvas)
 
 		@balls = [new Ball(@framesCanvas, 400, 300, 10)]
 		@paddles = [new Paddle(@interactionCanvas, @width / 2 - 100, @height - 10, 200, 10)]
-		@blocks = @createBlocks(@startBlockCount)
 
+		element.draw() for element in @paddles
 		@frames = @balls
-		element.draw() for element in @frames.concat @blocks, @paddles
 		@redraw()
 
 	levelUp: () =>
 		blockcount = @startBlockCount + (@level * 5)
 		@level++
 		@blocks = @createBlocks(blockcount)
-		block.draw() for block in @blocks
 		@balls.push new Ball(@framesCanvas, 400, 300 , 10)
 
 	gameOver: () =>
-		@startGame()
+		paddle.removeInteraction() for paddle in @paddles
+		@clearCanvas(@interactionCanvas)
+		@stopRedraw()
+		@blocks = @createBlocks(@startBlockCount)
+		@ui.play.hidden = false
 
 	createBlocks: (count) =>
 		blocks = for i in [0...count]
@@ -117,17 +136,26 @@ class @Breakout
 			row = Math.floor(i / 5)
 			blockWidth = 160
 			blockHeight = 25
-			new Block(@blocksCanvas, column * blockWidth, row * blockHeight, blockWidth, blockHeight)
+			block = new Block(@blocksCanvas, column * blockWidth, row * blockHeight, blockWidth, blockHeight)
+			block.draw()
+			block
 
 	clearCanvas: (canvi...) ->
 		canvas.width = canvas.getWidth() for canvas in canvi
 		return
 
+	resume: ()=>
+		@redraw()
+	pause: () =>
+		console.log 'pause'
+		@stopRedraw()
+
+	stopRedraw: () =>
+		cancelAnimationFrame @animationRequest
+		@lastRender = null
+
 	redraw: () =>
-		requestAnimationFrame @redraw
-
 		delta = if @lastRender? then new Date().getTime() - @lastRender else 1
-
 		@clearCanvas @framesCanvas
 		element.step(delta/10) for element in @frames
 
@@ -135,10 +163,7 @@ class @Breakout
 		@frames = @balls
 
 		@lastRender = new Date().getTime()
-
-	pause: () =>
-	resume: () =>
-
+		@animationRequest = requestAnimationFrame @redraw
 
 	detectCollisions: () =>
 		for ball in @balls

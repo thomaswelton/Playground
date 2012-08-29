@@ -64,37 +64,60 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* line 4, ../sass/styles.scss */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* line 9, ../sass/styles.scss */
 body {
   padding: 20px;
+  line-height: 1.5;
   font-family: Helvetica;
 }
 
-/* line 8, ../sass/styles.scss */
+/* line 14, ../sass/styles.scss */
 h1 {
   font-size: 25px;
-  line-height: 1.5;
   padding-bottom: 20px;
 }
 
-/* line 13, ../sass/styles.scss */
-#breakout {
-  width: 800px;
-  height: 600px;
-  position: relative;
-  background: black;
+/* line 18, ../sass/styles.scss */
+h2 {
+  font-size: 20px;
+  padding-bottom: 15px;
 }
 
-/* line 19, ../sass/styles.scss */
+/* line 22, ../sass/styles.scss */
+#breakout {
+  position: relative;
+  background: black;
+  width: 800px;
+  height: 600px;
+  margin-bottom: 20px;
+}
+
+/* line 29, ../sass/styles.scss */
 #page {
   display: block;
   margin: auto;
   width: 800px;
-  height: 600px;
 }
 
-/* line 25, ../sass/styles.scss */
-#blocks, #frames, #paddle {
+/* line 34, ../sass/styles.scss */
+#blocks, #frames, #paddle, .ui {
   position: absolute;
   width: 800px;
   height: 600px;
+}
+
+/* line 41, ../sass/styles.scss */
+.ui #play {
+  position: absolute;
+  width: 100px;
+  top: 400px;
+  left: 50%;
+  margin-left: -50px;
+  z-index: 10;
 }

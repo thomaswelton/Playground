@@ -1,3 +1,3 @@
 window.addEvent 'domready', () ->
-	new Breakout $('frames'), $('paddle'), $('blocks')
+	window.game = new Breakout $('frames'), $('paddle'), $('blocks')
 	true

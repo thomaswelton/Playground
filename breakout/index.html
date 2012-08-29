@@ -9,6 +9,8 @@
 	<link rel="stylesheet" href="stylesheets/styles.css">
 	<script src="//ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js"></script>
 	<script src="js/requestanimationframe.js"></script>
+	<script src="js/visibility-0.5.0.min.js"></script>
+
 	<script src="js/Breakout.js"></script>
 	<script src="js/script.js"></script>
 </head>
@@ -17,6 +19,9 @@
 		<h1>Breakout</h1>
 
 		<div id="breakout">
+			<div class="ui">
+				<button type=button id="play">Play</button>
+			</div>
 			<canvas id="frames"></canvas>
 			<canvas id="paddle"></canvas>
 			<canvas id="blocks"></canvas>

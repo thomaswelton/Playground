@@ -1,29 +1,50 @@
 @import "compass/reset";
 @import "compass/css3";
 
+html, body {
+    margin: 0;
+    padding: 0;
+    height:100%;
+}
 body{
 	padding:20px;
+	line-height:1.5;
 	font-family:Helvetica;
 }
 h1{
 	font-size:25px;
-	line-height:1.5;
 	padding-bottom:20px;
 }
+h2{
+	font-size:20px;
+	padding-bottom:15px;
+}
 #breakout{
-	width:800px;
-	height:600px;
 	position:relative;
 	background:black;
+	width:800px;
+	height:600px;
+	margin-bottom:20px;
 }
 #page{
 	display:block;
 	margin:auto;
 	width:800px;
-	height:600px;
 }
-#blocks, #frames, #paddle{
+#blocks, #frames, #paddle,.ui{
 	position:absolute;
 	width:800px;
 	height:600px;
+}
+
+.ui{
+	#play{
+		position:absolute;
+		$width: 100px;
+		width:$width;
+		top:400px;
+		left:50%;
+		margin-left: -1 * ($width / 2);
+		z-index:10;
+	}
 }

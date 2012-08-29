@@ -50,22 +50,17 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
     __extends(Paddle, _super);
 
     function Paddle(canvas, x, y, width, height) {
+      this.onMouseMove = __bind(this.onMouseMove, this);
+
+      this.removeInteraction = __bind(this.removeInteraction, this);
+
+      this.addInteraction = __bind(this.addInteraction, this);
+
       this.erase = __bind(this.erase, this);
 
       this.draw = __bind(this.draw, this);
-
-      var _this = this;
       Paddle.__super__.constructor.call(this, canvas, x, y, width, height);
-      console.log(canvas);
-      canvas.getParent().addEvent('mousemove', function(event) {
-        var canvasX, clickedX;
-        _this.erase();
-        clickedX = event.client.x;
-        canvasX = _this.canvas.getPosition().x - window.scrollX;
-        x = clickedX - canvasX;
-        _this.x = (x - _this.width / 2).limit(0, _this.canvas.width - _this.width);
-        return _this.draw();
-      });
+      this.addInteraction();
     }
 
     Paddle.prototype.draw = function() {
@@ -75,6 +70,24 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
 
     Paddle.prototype.erase = function() {
       return this.ctx.clearRect(this.x, this.y, this.width, this.height);
+    };
+
+    Paddle.prototype.addInteraction = function() {
+      return document.body.addEvent('mousemove', this.onMouseMove);
+    };
+
+    Paddle.prototype.removeInteraction = function() {
+      return document.body.removeEvent('mousemove', this.onMouseMove);
+    };
+
+    Paddle.prototype.onMouseMove = function(event) {
+      var canvasX, clickedX, x;
+      this.erase();
+      clickedX = event.client.x;
+      canvasX = this.canvas.getPosition().x - window.scrollX;
+      x = clickedX - canvasX;
+      this.x = (x - this.width / 2).limit(0, this.canvas.width - this.width);
+      return this.draw();
     };
 
     return Paddle;
@@ -149,17 +162,20 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
   this.Breakout = (function() {
 
     function Breakout(framesCanvas, interactionCanvas, blocksCanvas) {
-      var canvas, _i, _len, _ref;
+      var canvas, _i, _len, _ref,
+        _this = this;
       this.framesCanvas = framesCanvas;
       this.interactionCanvas = interactionCanvas;
       this.blocksCanvas = blocksCanvas;
       this.detectCollisions = __bind(this.detectCollisions, this);
 
-      this.resume = __bind(this.resume, this);
+      this.redraw = __bind(this.redraw, this);
+
+      this.stopRedraw = __bind(this.stopRedraw, this);
 
       this.pause = __bind(this.pause, this);
 
-      this.redraw = __bind(this.redraw, this);
+      this.resume = __bind(this.resume, this);
 
       this.createBlocks = __bind(this.createBlocks, this);
 
@@ -178,44 +194,62 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
         canvas.height = canvas.getHeight();
       }
       this.startBlockCount = 20;
-      this.startGame();
+      this.blocks = this.createBlocks(this.startBlockCount);
+      this.animationRequest = 0;
+      this.ui = {
+        play: $('play')
+      };
+      this.ui.play.addEvent('click', function(event) {
+        event.target.hidden = true;
+        return _this.startGame();
+      });
+      Visibility.change(function(e, state) {
+        if (state === 'hidden') {
+          return _this.pause();
+        } else {
+          return _this.resume();
+        }
+      });
     }
 
     Breakout.prototype.startGame = function() {
       var element, _i, _len, _ref;
       this.level = 1;
-      this.clearCanvas(this.blocksCanvas, this.interactionCanvas);
+      this.clearCanvas(this.interactionCanvas);
       this.balls = [new Ball(this.framesCanvas, 400, 300, 10)];
       this.paddles = [new Paddle(this.interactionCanvas, this.width / 2 - 100, this.height - 10, 200, 10)];
-      this.blocks = this.createBlocks(this.startBlockCount);
-      this.frames = this.balls;
-      _ref = this.frames.concat(this.blocks, this.paddles);
+      _ref = this.paddles;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         element = _ref[_i];
         element.draw();
       }
+      this.frames = this.balls;
       return this.redraw();
     };
 
     Breakout.prototype.levelUp = function() {
-      var block, blockcount, _i, _len, _ref;
+      var blockcount;
       blockcount = this.startBlockCount + (this.level * 5);
       this.level++;
       this.blocks = this.createBlocks(blockcount);
-      _ref = this.blocks;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        block = _ref[_i];
-        block.draw();
-      }
       return this.balls.push(new Ball(this.framesCanvas, 400, 300, 10));
     };
 
     Breakout.prototype.gameOver = function() {
-      return this.startGame();
+      var paddle, _i, _len, _ref;
+      _ref = this.paddles;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        paddle = _ref[_i];
+        paddle.removeInteraction();
+      }
+      this.clearCanvas(this.interactionCanvas);
+      this.stopRedraw();
+      this.blocks = this.createBlocks(this.startBlockCount);
+      return this.ui.play.hidden = false;
     };
 
     Breakout.prototype.createBlocks = function(count) {
-      var blockHeight, blockWidth, blocks, column, i, row;
+      var block, blockHeight, blockWidth, blocks, column, i, row;
       return blocks = (function() {
         var _i, _results;
         _results = [];
@@ -224,7 +258,9 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
           row = Math.floor(i / 5);
           blockWidth = 160;
           blockHeight = 25;
-          _results.push(new Block(this.blocksCanvas, column * blockWidth, row * blockHeight, blockWidth, blockHeight));
+          block = new Block(this.blocksCanvas, column * blockWidth, row * blockHeight, blockWidth, blockHeight);
+          block.draw();
+          _results.push(block);
         }
         return _results;
       }).call(this);
@@ -239,9 +275,22 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
       }
     };
 
+    Breakout.prototype.resume = function() {
+      return this.redraw();
+    };
+
+    Breakout.prototype.pause = function() {
+      console.log('pause');
+      return this.stopRedraw();
+    };
+
+    Breakout.prototype.stopRedraw = function() {
+      cancelAnimationFrame(this.animationRequest);
+      return this.lastRender = null;
+    };
+
     Breakout.prototype.redraw = function() {
       var delta, element, _i, _len, _ref;
-      requestAnimationFrame(this.redraw);
       delta = this.lastRender != null ? new Date().getTime() - this.lastRender : 1;
       this.clearCanvas(this.framesCanvas);
       _ref = this.frames;
@@ -251,12 +300,9 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
       }
       this.detectCollisions();
       this.frames = this.balls;
-      return this.lastRender = new Date().getTime();
+      this.lastRender = new Date().getTime();
+      return this.animationRequest = requestAnimationFrame(this.redraw);
     };
-
-    Breakout.prototype.pause = function() {};
-
-    Breakout.prototype.resume = function() {};
 
     Breakout.prototype.detectCollisions = function() {
       var ball, block, paddle, percent, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
