@@ -98,7 +98,7 @@ class @Breakout
 
 		@animationRequest  = 0
 
-		@ui = play : $('play')
+		@ui = play : $('play'), score : $('score')
 
 		@ui.play.addEvent 'click', (event) =>	
 			event.target.hidden = true
@@ -109,6 +109,7 @@ class @Breakout
 
 	startGame: () =>
 		@level = 1
+		@clearScore()
 		@clearCanvas(@interactionCanvas)
 
 		@balls = (new Ball(@framesCanvas, 400, 300, 10) for i in [0...@startBallCount])
@@ -124,14 +125,24 @@ class @Breakout
 		@blocks = @createBlocks(blockcount)
 		@balls.push new Ball(@framesCanvas, 400, 300 , 10)
 
+	addScore: (points) =>
+		@score += points
+		@ui.score.set 'text', @score
+
+	clearScore: (points) =>
+		@score = 0
+		@ui.score.set 'text', @score
+
 	gameOver: () =>
 		paddle.removeInteraction() for paddle in @paddles
 		@clearCanvas(@interactionCanvas)
 		@stopRedraw()
 		@blocks = @createBlocks(@startBlockCount)
 		@ui.play.hidden = false
+		@clearScore()
 
 	createBlocks: (count) =>
+		@clearCanvas(@blocksCanvas)
 		blocks = for i in [0...count]
 			column = i % 5
 			row = Math.floor(i / 5)
@@ -186,10 +197,11 @@ class @Breakout
 					percent = (((paddle.x - ball.x) + paddle.width/2)/100).limit(-1,1)
 					ball.dx = 5 * -1 * percent;
 
-
+			##Ball hits a block
 			for block in @blocks[..]
 				if block.collides(ball.x - (ball.width/2), ball.y - (ball.height/2), ball.width, ball.height)
 					ball.dy = ball.dy * -1 
 					block.destroy()
 					@blocks.erase block
+					@addScore(100)
 					@levelUp() if @blocks.length is 0

@@ -181,6 +181,10 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
 
       this.gameOver = __bind(this.gameOver, this);
 
+      this.clearScore = __bind(this.clearScore, this);
+
+      this.addScore = __bind(this.addScore, this);
+
       this.levelUp = __bind(this.levelUp, this);
 
       this.startGame = __bind(this.startGame, this);
@@ -198,7 +202,8 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
       this.blocks = this.createBlocks(this.startBlockCount);
       this.animationRequest = 0;
       this.ui = {
-        play: $('play')
+        play: $('play'),
+        score: $('score')
       };
       this.ui.play.addEvent('click', function(event) {
         event.target.hidden = true;
@@ -216,6 +221,7 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
     Breakout.prototype.startGame = function() {
       var element, i, _i, _len, _ref;
       this.level = 1;
+      this.clearScore();
       this.clearCanvas(this.interactionCanvas);
       this.balls = (function() {
         var _i, _ref, _results;
@@ -243,6 +249,16 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
       return this.balls.push(new Ball(this.framesCanvas, 400, 300, 10));
     };
 
+    Breakout.prototype.addScore = function(points) {
+      this.score += points;
+      return this.ui.score.set('text', this.score);
+    };
+
+    Breakout.prototype.clearScore = function(points) {
+      this.score = 0;
+      return this.ui.score.set('text', this.score);
+    };
+
     Breakout.prototype.gameOver = function() {
       var paddle, _i, _len, _ref;
       _ref = this.paddles;
@@ -253,11 +269,13 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
       this.clearCanvas(this.interactionCanvas);
       this.stopRedraw();
       this.blocks = this.createBlocks(this.startBlockCount);
-      return this.ui.play.hidden = false;
+      this.ui.play.hidden = false;
+      return this.clearScore();
     };
 
     Breakout.prototype.createBlocks = function(count) {
       var block, blockHeight, blockWidth, blocks, column, i, row;
+      this.clearCanvas(this.blocksCanvas);
       return blocks = (function() {
         var _i, _results;
         _results = [];
@@ -347,6 +365,7 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
             ball.dy = ball.dy * -1;
             block.destroy();
             this.blocks.erase(block);
+            this.addScore(100);
             if (this.blocks.length === 0) {
               this.levelUp();
             }
