@@ -194,6 +194,7 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
         canvas.height = canvas.getHeight();
       }
       this.startBlockCount = 20;
+      this.startBallCount = 1;
       this.blocks = this.createBlocks(this.startBlockCount);
       this.animationRequest = 0;
       this.ui = {
@@ -213,10 +214,17 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
     }
 
     Breakout.prototype.startGame = function() {
-      var element, _i, _len, _ref;
+      var element, i, _i, _len, _ref;
       this.level = 1;
       this.clearCanvas(this.interactionCanvas);
-      this.balls = [new Ball(this.framesCanvas, 400, 300, 10)];
+      this.balls = (function() {
+        var _i, _ref, _results;
+        _results = [];
+        for (i = _i = 0, _ref = this.startBallCount; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
+          _results.push(new Ball(this.framesCanvas, 400, 300, 10));
+        }
+        return _results;
+      }).call(this);
       this.paddles = [new Paddle(this.interactionCanvas, this.width / 2 - 100, this.height - 10, 200, 10)];
       _ref = this.paddles;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -280,7 +288,6 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
     };
 
     Breakout.prototype.pause = function() {
-      console.log('pause');
       return this.stopRedraw();
     };
 
@@ -306,7 +313,7 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
 
     Breakout.prototype.detectCollisions = function() {
       var ball, block, paddle, percent, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
-      _ref = this.balls;
+      _ref = this.balls.slice(0);
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         ball = _ref[_i];
         if (ball.y - ball.radius * 2 > this.height) {

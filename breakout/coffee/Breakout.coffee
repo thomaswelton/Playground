@@ -148,7 +148,6 @@ class @Breakout
 	resume: ()=>
 		@redraw()
 	pause: () =>
-		console.log 'pause'
 		@stopRedraw()
 
 	stopRedraw: () =>
@@ -167,7 +166,7 @@ class @Breakout
 		@animationRequest = requestAnimationFrame @redraw
 
 	detectCollisions: () =>
-		for ball in @balls
+		for ball in @balls[..]
 			##Check if ball fell out of the bottom
 			if ball.y - ball.radius * 2 > @height
 				@balls.erase(ball)
