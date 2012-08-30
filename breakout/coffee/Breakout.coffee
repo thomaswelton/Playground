@@ -69,7 +69,14 @@ class Ball extends canvasElement
 		super canvas, x, y, radius * 2, radius * 2
 
 		@dx = 0
-		@dy = 5
+		@dy = 500
+
+		##The ball either flashes and stays still or bouncesAround
+		@loadingTime = 1500
+		##When loading flashFrameRate defines the flashes per second 
+		@flashFrameRate = 3.5 
+		@creationTime = new Date().getTime()
+		@lifetime = 0
 
 	draw: () =>
 		@ctx.beginPath()
@@ -78,10 +85,16 @@ class Ball extends canvasElement
 		@ctx.fillStyle = @color
 		@ctx.fill()
 
-	step: (seconds) ->
-		@x += @dx * seconds
-		@y += @dy * seconds
-		@draw()
+	step: (miliseconds) ->
+		@lifetime += miliseconds
+		if(@lifetime >= @loadingTime)
+			@x += @dx * (miliseconds / 1000)
+			@y += @dy * (miliseconds / 1000)
+			@draw()
+		else
+			@draw() if Math.floor(@lifetime / (1000 / (@flashFrameRate * 2))) % 2 is 1
+
+		
 
 class @Breakout
 	constructor: (@framesCanvas,@interactionCanvas,@blocksCanvas) ->
@@ -168,7 +181,7 @@ class @Breakout
 	redraw: () =>
 		delta = if @lastRender? then new Date().getTime() - @lastRender else 1
 		@clearCanvas @framesCanvas
-		element.step(delta/10) for element in @frames
+		element.step(delta) for element in @frames
 
 		@detectCollisions()
 		@frames = @balls
@@ -195,7 +208,7 @@ class @Breakout
 				if paddle.collides(ball.x - (ball.width/2), ball.y - (ball.height/2), ball.width, ball.height)
 					ball.dy = Math.abs(ball.dy) * -1
 					percent = (((paddle.x - ball.x) + paddle.width/2)/100).limit(-1,1)
-					ball.dx = 5 * -1 * percent;
+					ball.dx = ball.dy * percent;
 
 			##Ball hits a block
 			for block in @blocks[..]

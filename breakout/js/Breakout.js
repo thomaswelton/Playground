@@ -138,7 +138,11 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
 
       Ball.__super__.constructor.call(this, canvas, x, y, radius * 2, radius * 2);
       this.dx = 0;
-      this.dy = 5;
+      this.dy = 500;
+      this.loadingTime = 1500;
+      this.flashFrameRate = 3.5;
+      this.creationTime = new Date().getTime();
+      this.lifetime = 0;
     }
 
     Ball.prototype.draw = function() {
@@ -149,10 +153,17 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
       return this.ctx.fill();
     };
 
-    Ball.prototype.step = function(seconds) {
-      this.x += this.dx * seconds;
-      this.y += this.dy * seconds;
-      return this.draw();
+    Ball.prototype.step = function(miliseconds) {
+      this.lifetime += miliseconds;
+      if (this.lifetime >= this.loadingTime) {
+        this.x += this.dx * (miliseconds / 1000);
+        this.y += this.dy * (miliseconds / 1000);
+        return this.draw();
+      } else {
+        if (Math.floor(this.lifetime / (1000 / (this.flashFrameRate * 2))) % 2 === 1) {
+          return this.draw();
+        }
+      }
     };
 
     return Ball;
@@ -321,7 +332,7 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
       _ref = this.frames;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         element = _ref[_i];
-        element.step(delta / 10);
+        element.step(delta);
       }
       this.detectCollisions();
       this.frames = this.balls;
@@ -355,7 +366,7 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
           if (paddle.collides(ball.x - (ball.width / 2), ball.y - (ball.height / 2), ball.width, ball.height)) {
             ball.dy = Math.abs(ball.dy) * -1;
             percent = (((paddle.x - ball.x) + paddle.width / 2) / 100).limit(-1, 1);
-            ball.dx = 5 * -1 * percent;
+            ball.dx = ball.dy * percent;
           }
         }
         _ref2 = this.blocks.slice(0);
