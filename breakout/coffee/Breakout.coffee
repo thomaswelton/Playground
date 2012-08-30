@@ -121,11 +121,12 @@ class @Breakout
 			if state is 'hidden' then @pause() else @resume()
 
 	startGame: () =>
+		@blocks = @createBlocks(@startBlockCount) if @blocks.length < @startBlockCount
 		@level = 1
 		@clearScore()
 		@clearCanvas(@interactionCanvas)
 
-		@balls = (new Ball(@framesCanvas, 400, 300, 10) for i in [0...@startBallCount])
+		@balls = @createBalls @level
 		@paddle = new Paddle(@interactionCanvas, @width / 2 - 100, @height - 10, 200, 10)
 
 		@paddle.draw()
@@ -137,7 +138,7 @@ class @Breakout
 		blockcount = @startBlockCount + (@level * 5)
 		@level++
 		@blocks = @createBlocks(blockcount)
-		@balls.push new Ball(@framesCanvas, 400, 300 , 10)
+		@balls = @balls.concat @createBalls()
 
 	addScore: (points) =>
 		@score += points
@@ -151,11 +152,19 @@ class @Breakout
 		@paddle.removeInteraction()
 		@clearCanvas(@interactionCanvas)
 		@stopRedraw()
-		@blocks = @createBlocks(@startBlockCount)
 		@ui.play.hidden = false
-		@clearScore()
+
+	createBalls: (count = 1) =>
+		console.log @startBlockCount
+		blockCount = @startBlockCount + (@level * 5) - 5
+		blockCount = Math.min(blockCount,85)
+		console.log blockCount
+
+		y = if blockCount > 50 then 300 + (25 * ((blockCount - 50)/5)) else 300
+		new Ball(@framesCanvas, 400, y, 10) for i in [0...count]
 
 	createBlocks: (count) =>
+		count = Math.min(count,85)
 		@clearCanvas(@blocksCanvas)
 		blocks = for i in [0...count]
 			column = i % 5

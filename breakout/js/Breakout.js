@@ -190,6 +190,8 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
 
       this.createBlocks = __bind(this.createBlocks, this);
 
+      this.createBalls = __bind(this.createBalls, this);
+
       this.gameOver = __bind(this.gameOver, this);
 
       this.clearScore = __bind(this.clearScore, this);
@@ -230,18 +232,13 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
     }
 
     Breakout.prototype.startGame = function() {
-      var i;
+      if (this.blocks.length < this.startBlockCount) {
+        this.blocks = this.createBlocks(this.startBlockCount);
+      }
       this.level = 1;
       this.clearScore();
       this.clearCanvas(this.interactionCanvas);
-      this.balls = (function() {
-        var _i, _ref, _results;
-        _results = [];
-        for (i = _i = 0, _ref = this.startBallCount; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
-          _results.push(new Ball(this.framesCanvas, 400, 300, 10));
-        }
-        return _results;
-      }).call(this);
+      this.balls = this.createBalls(this.level);
       this.paddle = new Paddle(this.interactionCanvas, this.width / 2 - 100, this.height - 10, 200, 10);
       this.paddle.draw();
       this.frames = this.balls;
@@ -253,7 +250,7 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
       blockcount = this.startBlockCount + (this.level * 5);
       this.level++;
       this.blocks = this.createBlocks(blockcount);
-      return this.balls.push(new Ball(this.framesCanvas, 400, 300, 10));
+      return this.balls = this.balls.concat(this.createBalls());
     };
 
     Breakout.prototype.addScore = function(points) {
@@ -270,13 +267,29 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
       this.paddle.removeInteraction();
       this.clearCanvas(this.interactionCanvas);
       this.stopRedraw();
-      this.blocks = this.createBlocks(this.startBlockCount);
-      this.ui.play.hidden = false;
-      return this.clearScore();
+      return this.ui.play.hidden = false;
+    };
+
+    Breakout.prototype.createBalls = function(count) {
+      var blockCount, i, y, _i, _results;
+      if (count == null) {
+        count = 1;
+      }
+      console.log(this.startBlockCount);
+      blockCount = this.startBlockCount + (this.level * 5) - 5;
+      blockCount = Math.min(blockCount, 85);
+      console.log(blockCount);
+      y = blockCount > 50 ? 300 + (25 * ((blockCount - 50) / 5)) : 300;
+      _results = [];
+      for (i = _i = 0; 0 <= count ? _i < count : _i > count; i = 0 <= count ? ++_i : --_i) {
+        _results.push(new Ball(this.framesCanvas, 400, y, 10));
+      }
+      return _results;
     };
 
     Breakout.prototype.createBlocks = function(count) {
       var block, blockHeight, blockWidth, blocks, column, i, row;
+      count = Math.min(count, 85);
       this.clearCanvas(this.blocksCanvas);
       return blocks = (function() {
         var _i, _results;

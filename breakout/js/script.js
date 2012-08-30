@@ -2,7 +2,7 @@
 (function() {
 
   window.addEvent('domready', function() {
-    new Breakout($('frames'), $('paddle'), $('blocks'));
+    window.game = new Breakout($('frames'), $('paddle'), $('blocks'));
     return true;
   });
 
