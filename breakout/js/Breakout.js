@@ -230,7 +230,7 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
     }
 
     Breakout.prototype.startGame = function() {
-      var element, i, _i, _len, _ref;
+      var i;
       this.level = 1;
       this.clearScore();
       this.clearCanvas(this.interactionCanvas);
@@ -242,12 +242,8 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
         }
         return _results;
       }).call(this);
-      this.paddles = [new Paddle(this.interactionCanvas, this.width / 2 - 100, this.height - 10, 200, 10)];
-      _ref = this.paddles;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        element = _ref[_i];
-        element.draw();
-      }
+      this.paddle = new Paddle(this.interactionCanvas, this.width / 2 - 100, this.height - 10, 200, 10);
+      this.paddle.draw();
       this.frames = this.balls;
       return this.redraw();
     };
@@ -271,12 +267,7 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
     };
 
     Breakout.prototype.gameOver = function() {
-      var paddle, _i, _len, _ref;
-      _ref = this.paddles;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        paddle = _ref[_i];
-        paddle.removeInteraction();
-      }
+      this.paddle.removeInteraction();
       this.clearCanvas(this.interactionCanvas);
       this.stopRedraw();
       this.blocks = this.createBlocks(this.startBlockCount);
@@ -341,7 +332,7 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
     };
 
     Breakout.prototype.detectCollisions = function() {
-      var ball, block, paddle, percent, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
+      var ball, block, percent, _i, _j, _len, _len1, _ref, _ref1;
       _ref = this.balls.slice(0);
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         ball = _ref[_i];
@@ -360,18 +351,14 @@ Blackout mode - blocks are invisible, when the user user lots of balls in play
         if (ball.y - (ball.width / 2) <= 0) {
           ball.dy = Math.abs(ball.dy);
         }
-        _ref1 = this.paddles;
-        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-          paddle = _ref1[_j];
-          if (paddle.collides(ball.x - (ball.width / 2), ball.y - (ball.height / 2), ball.width, ball.height)) {
-            ball.dy = Math.abs(ball.dy) * -1;
-            percent = (((paddle.x - ball.x) + paddle.width / 2) / 100).limit(-1, 1);
-            ball.dx = ball.dy * percent;
-          }
+        if (this.paddle.collides(ball.x - (ball.width / 2), ball.y - (ball.height / 2), ball.width, ball.height)) {
+          ball.dy = Math.abs(ball.dy) * -1;
+          percent = (((this.paddle.x - ball.x) + this.paddle.width / 2) / 100).limit(-1, 1);
+          ball.dx = ball.dy * percent;
         }
-        _ref2 = this.blocks.slice(0);
-        for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-          block = _ref2[_k];
+        _ref1 = this.blocks.slice(0);
+        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+          block = _ref1[_j];
           if (block.collides(ball.x - (ball.width / 2), ball.y - (ball.height / 2), ball.width, ball.height)) {
             ball.dy = ball.dy * -1;
             block.destroy();

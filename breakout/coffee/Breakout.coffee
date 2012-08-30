@@ -126,9 +126,10 @@ class @Breakout
 		@clearCanvas(@interactionCanvas)
 
 		@balls = (new Ball(@framesCanvas, 400, 300, 10) for i in [0...@startBallCount])
-		@paddles = [new Paddle(@interactionCanvas, @width / 2 - 100, @height - 10, 200, 10)]
+		@paddle = new Paddle(@interactionCanvas, @width / 2 - 100, @height - 10, 200, 10)
 
-		element.draw() for element in @paddles
+		@paddle.draw()
+
 		@frames = @balls
 		@redraw()
 
@@ -147,7 +148,7 @@ class @Breakout
 		@ui.score.set 'text', @score
 
 	gameOver: () =>
-		paddle.removeInteraction() for paddle in @paddles
+		@paddle.removeInteraction()
 		@clearCanvas(@interactionCanvas)
 		@stopRedraw()
 		@blocks = @createBlocks(@startBlockCount)
@@ -204,11 +205,10 @@ class @Breakout
 			ball.dy = Math.abs(ball.dy) if ball.y - (ball.width/2) <= 0
 
 			##Has hit the paddle
-			for paddle in @paddles
-				if paddle.collides(ball.x - (ball.width/2), ball.y - (ball.height/2), ball.width, ball.height)
-					ball.dy = Math.abs(ball.dy) * -1
-					percent = (((paddle.x - ball.x) + paddle.width/2)/100).limit(-1,1)
-					ball.dx = ball.dy * percent;
+			if @paddle.collides(ball.x - (ball.width/2), ball.y - (ball.height/2), ball.width, ball.height)
+				ball.dy = Math.abs(ball.dy) * -1
+				percent = (((@paddle.x - ball.x) + @paddle.width/2)/100).limit(-1,1)
+				ball.dx = ball.dy * percent;
 
 			##Ball hits a block
 			for block in @blocks[..]
