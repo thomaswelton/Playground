@@ -1,0 +1,228 @@
+/* line 17, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/lib/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* line 20, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/lib/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+body {
+  line-height: 1;
+}
+
+/* line 22, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/lib/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 24, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/lib/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 26, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/lib/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 28, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/lib/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 101, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/lib/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 30, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/lib/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 114, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/lib/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
+@font-face {
+  font-family: 'back_to_1982regular';
+  src: url('/breakout/css/fonts/backto1982-webfont.eot');
+  src: url('/breakout/css/fonts/backto1982-webfont.eot?#iefix') format("embedded-opentype"), url('/breakout/css/fonts/backto1982-webfont.woff') format("woff"), url('/breakout/css/fonts/backto1982-webfont.ttf') format("truetype"), url('/breakout/css/fonts/backto1982-webfont.svg#back_to_1982regular') format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: '3d_let_brkregular';
+  src: url('/breakout/css/fonts/3dlet-webfont.eot');
+  src: url('/breakout/css/fonts/3dlet-webfont.eot?#iefix') format("embedded-opentype"), url('/breakout/css/fonts/3dlet-webfont.woff') format("woff"), url('/breakout/css/fonts/3dlet-webfont.ttf') format("truetype"), url('/breakout/css/fonts/3dlet-webfont.svg#3d_let_brkregular') format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* line 35, ../sass/styles.scss */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #555;
+}
+
+/* line 42, ../sass/styles.scss */
+body {
+  padding: 20px;
+  line-height: 1;
+  font-family: Helvetica;
+}
+
+/* line 47, ../sass/styles.scss */
+h1 {
+  display: inline;
+  float: left;
+  margin-right: 0;
+  text-shadow: white 0px 0px 1px;
+  font-family: '3d_let_brkregular';
+  text-transform: uppercase;
+  color: #333;
+  font-size: 100px;
+  padding-bottom: 20px;
+}
+/* line 147, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/lib/compass/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+* html h1 {
+  overflow-x: hidden;
+}
+
+/* line 56, ../sass/styles.scss */
+h2 {
+  font-size: 20px;
+  padding-bottom: 15px;
+}
+
+/* line 60, ../sass/styles.scss */
+.box {
+  display: inline;
+  float: left;
+  margin-right: 0;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  width: 720px;
+  background: white;
+  padding: 40px;
+}
+/* line 147, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/lib/compass/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+* html .box {
+  overflow-x: hidden;
+}
+
+/* line 67, ../sass/styles.scss */
+#score {
+  display: inline;
+  float: left;
+  margin-right: 0;
+  font-family: 'back_to_1982regular';
+  color: yellow;
+  float: right;
+  height: 40px;
+  line-height: 100px;
+  font-size: 40px;
+}
+/* line 147, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/lib/compass/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+* html #score {
+  overflow-x: hidden;
+}
+
+/* line 76, ../sass/styles.scss */
+#breakout {
+  display: inline;
+  float: left;
+  margin-right: 0;
+  position: relative;
+  background: black;
+  width: 800px;
+  height: 600px;
+  margin-bottom: 20px;
+}
+/* line 147, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/lib/compass/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+* html #breakout {
+  overflow-x: hidden;
+}
+
+/* line 84, ../sass/styles.scss */
+#page {
+  display: block;
+  margin: auto;
+  width: 800px;
+}
+
+/* line 89, ../sass/styles.scss */
+#blocks, #frames, #paddle, .ui {
+  position: absolute;
+  width: 800px;
+  height: 600px;
+}
+
+/* line 96, ../sass/styles.scss */
+.ui #play {
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #888888));
+  background: -webkit-linear-gradient(#ffffff, #888888);
+  background: -moz-linear-gradient(#ffffff, #888888);
+  background: -o-linear-gradient(#ffffff, #888888);
+  background: -ms-linear-gradient(#ffffff, #888888);
+  background: linear-gradient(#ffffff, #888888);
+  text-shadow: white 0px 0px 1px;
+  -webkit-box-shadow: 0px 0px 5px #333333;
+  -moz-box-shadow: 0px 0px 5px #333333;
+  box-shadow: 0px 0px 5px #333333;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  width: 70px;
+  padding: 20px 40px;
+  position: absolute;
+  top: 350px;
+  left: 50%;
+  margin-left: -75px;
+  z-index: 10;
+  font-size: 20px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+/* line 119, ../sass/styles.scss */
+.ui #play:hover {
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #888888), color-stop(100%, #ffffff));
+  background: -webkit-linear-gradient(#888888, #ffffff);
+  background: -moz-linear-gradient(#888888, #ffffff);
+  background: -o-linear-gradient(#888888, #ffffff);
+  background: -ms-linear-gradient(#888888, #ffffff);
+  background: linear-gradient(#888888, #ffffff);
+}

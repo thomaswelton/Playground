@@ -1,0 +1,42 @@
+<!doctype html>
+<html class=no-js lang=en>
+<head>
+	<meta charset=utf-8>
+
+	<title>Breakout</title>
+	<meta name=description content="">
+	<meta name=viewport content="width=device-width">
+	<link rel=stylesheet href='stylesheets/4692cd2.css'>
+	
+	<script src="js/mootools-core-1.4.5.js"></script>
+	<script src="js/requestanimationframe.js"></script>
+	<script src="js/visibility-0.5.0.min.js"></script>
+	<script src="js/Breakout.js"></script>
+	<script src="js/script.js"></script>
+	
+</head>
+<body>
+	<div id=page>
+		<h1>Breakout</h1>
+		<div id=score>0</div>
+		<div id=breakout>
+			<div class=ui>
+				<button type=button id=play>Play</button>
+			</div>
+			<canvas id=frames></canvas>
+			<canvas id=paddle></canvas>
+			<canvas id=blocks></canvas>
+		</div>
+
+		<div class=box>
+			<h2>Libraries Used</h1>
+			<ul>
+				<li><a href="http://coffeescript.org/" target=_blank>CoffeeScript</a> - a little language that compiles into JavaScript</li>
+				<li><a href="http://mootools.net/" target=_blank>MooTools</a> - a compact, modular, Object-Oriented JavaScript framework</li>
+				<li><a href="https://gist.github.com/1579671" target=_blank>Paul Irish</a> - requestAnimationFrame shim</li>
+				<li><a href="https://github.com/ai/visibility.js" target=_blank>Visibility.js</a> - a wrapper for the Page Visibility API</li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

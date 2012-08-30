@@ -94,8 +94,6 @@ class Ball extends canvasElement
 		else
 			@draw() if Math.floor(@lifetime / (1000 / (@flashFrameRate * 2))) % 2 is 1
 
-		
-
 class @Breakout
 	constructor: (@framesCanvas,@interactionCanvas,@blocksCanvas) ->
 		@width = framesCanvas.getWidth()
