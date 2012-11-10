@@ -1,0 +1,184 @@
+/* line 17, /Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/lib/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* line 20, /Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/lib/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+body {
+  line-height: 1;
+}
+
+/* line 22, /Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/lib/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 24, /Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/lib/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 26, /Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/lib/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 28, /Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/lib/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 101, /Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/lib/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 30, /Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/lib/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 114, /Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/lib/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
+/* line 1, /Users/thomaswelton/Sites/jsfiddle/coffeeboxes/sass/_fancyBox.scss */
+label {
+  display: block;
+  position: relative;
+  margin-bottom: 20px;
+  font-size: 60px;
+  line-height: 100px;
+}
+
+/* line 9, /Users/thomaswelton/Sites/jsfiddle/coffeeboxes/sass/_fancyBox.scss */
+.fancyCheckbox {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  display: inline-block;
+  border: 10px solid black;
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  font-size: 60px;
+  text-align: center;
+  vertical-align: middle;
+  margin: 20px;
+}
+/* line 21, /Users/thomaswelton/Sites/jsfiddle/coffeeboxes/sass/_fancyBox.scss */
+.fancyCheckbox.checked {
+  border-color: yellow;
+}
+
+/* line 26, /Users/thomaswelton/Sites/jsfiddle/coffeeboxes/sass/_fancyBox.scss */
+input.fancyCheckbox {
+  position: absolute;
+  z-index: -10;
+}
+
+/* line 32, /Users/thomaswelton/Sites/jsfiddle/coffeeboxes/sass/_fancyBox.scss */
+:focus + div.fancyCheckbox {
+  border-color: purple;
+}
+
+/* line 37, /Users/thomaswelton/Sites/jsfiddle/coffeeboxes/sass/_fancyBox.scss */
+.blue {
+  background: blue;
+}
+
+/* line 38, /Users/thomaswelton/Sites/jsfiddle/coffeeboxes/sass/_fancyBox.scss */
+.green {
+  background: green;
+}
+
+/* line 39, /Users/thomaswelton/Sites/jsfiddle/coffeeboxes/sass/_fancyBox.scss */
+.red {
+  background: red;
+}
+
+/* line 1, /Users/thomaswelton/Sites/jsfiddle/coffeeboxes/sass/_sexyScroll.scss */
+#longContent {
+  height: 400px;
+  overflow: scroll;
+  font-size: 25px;
+  line-height: 1.5;
+}
+
+/* line 8, /Users/thomaswelton/Sites/jsfiddle/coffeeboxes/sass/_sexyScroll.scss */
+.scroll {
+  width: 10px;
+  margin: 0 0 0 5px;
+}
+
+/* line 12, /Users/thomaswelton/Sites/jsfiddle/coffeeboxes/sass/_sexyScroll.scss */
+.handle {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  height: 75px;
+  background: #ccc;
+}
+
+/* line 7, ../sass/styles.scss */
+html {
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #b3b3b3));
+  background-image: -webkit-linear-gradient(#ffffff, #b3b3b3);
+  background-image: -moz-linear-gradient(#ffffff, #b3b3b3);
+  background-image: -o-linear-gradient(#ffffff, #b3b3b3);
+  background-image: -ms-linear-gradient(#ffffff, #b3b3b3);
+  background-image: linear-gradient(#ffffff, #b3b3b3);
+  width: 100%;
+  min-height: 100%;
+}
+
+/* line 13, ../sass/styles.scss */
+#page {
+  width: 800px;
+  margin: 100px auto 0 auto;
+}
+
+/* line 18, ../sass/styles.scss */
+h1 {
+  font-size: 30px;
+  line-height: 1.2;
+  padding-bottom: 20px;
+}
+
+/* line 24, ../sass/styles.scss */
+.box {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 0px 5px #333333;
+  -moz-box-shadow: 0px 0px 5px #333333;
+  box-shadow: 0px 0px 5px #333333;
+  background: white;
+  margin-bottom: 20px;
+  padding: 20px;
+}

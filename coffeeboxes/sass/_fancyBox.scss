@@ -1,0 +1,39 @@
+label{
+    display:block;
+    position:relative;
+    margin-bottom:20px;
+    font-size:60px;
+    line-height:100px;
+}
+
+.fancyCheckbox{
+	@include user-select(none);
+    display:inline-block;
+    border:10px solid black;
+    width:100px;
+    height:100px;
+    line-height:100px;
+    font-size:60px;
+    text-align:center;
+    vertical-align:middle;
+    margin:20px;
+
+    &.checked{
+    	border-color:yellow;
+    }
+}
+
+input.fancyCheckbox{
+    position:absolute;
+    z-index:-10;
+}
+
+
+:focus + div.fancyCheckbox{
+    border-color:purple;
+}
+
+
+.blue{ background: blue; }
+.green{ background: green; }
+.red{ background: red; }

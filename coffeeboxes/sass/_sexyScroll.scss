@@ -1,0 +1,16 @@
+#longContent{
+    height:400px;
+    overflow:scroll;
+
+    font-size:25px;
+    line-height:1.5;
+}
+.scroll{
+    width:10px;
+    margin:0 0 0 5px;
+}
+.handle{
+	@include border-radius(5px);
+    height:75px;
+    background:#ccc;
+}

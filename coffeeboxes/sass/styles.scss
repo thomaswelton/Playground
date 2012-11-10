@@ -1,0 +1,31 @@
+@import "compass/reset";
+@import "compass/css3";
+@import "compass/css3/user-interface";
+@import "_fancyBox";
+@import "_sexyScroll";
+
+html{
+	@include background-image(linear-gradient(white, darken(white,30%)));
+	width:100%;
+	min-height: 100%;
+}
+
+#page{
+	width:800px;
+	margin:100px auto 0 auto;
+}
+
+h1{
+	font-size:30px;
+	line-height:1.2;
+	padding-bottom:20px;
+}
+
+.box{
+	@include border-radius(10px);
+	@include box-shadow;
+	background:white;
+	margin-bottom:20px;
+	padding:20px;
+}
+
